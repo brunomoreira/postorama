@@ -1,0 +1,25 @@
+div.twelve.columns.footer-ctn
+    div.six.columns.disclaimer
+        span Made With
+        i(class="fa fa-heart")
+        span In Porto!
+
+    div.six.columns.social
+        div.social-links
+            i(class="fa fa-facebook-square")
+            i(class="fa fa-google-plus-square")
+            i(class="fa fa-twitter-square")
+            if loggedAdmin === null
+                i(class="fa fa-user-plus admin-btn")
+
+    div.twelve.columns.reply-errors-ctn
+        i(class="fa fa-close close-reply-errors-ctn")
+
+    div.twelve.columns.reply-success-ctn
+        i(class="fa fa-close close-reply-success-ctn")
+
+    include ../modals/admin-proposal-modal.jade   
+
+    include ../modals/terms-modal.jade
+
+    include ../modals/admin-modal.jade

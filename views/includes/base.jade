@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css")
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css")
+    link(rel="stylesheet", href="/stylesheets/bulletin.css")
+    link(rel='stylesheet', href='/stylesheets/modal.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  
+  body
+    
+    div.container
+
+        include ../modals/admin-edit-modal.jade
+        include ../modals/delete-post-modal.jade
+
+        block content
+
+    script(type="text/javascript", src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(type="text/javascript", src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js")
+    script(type="text/javascript", src="/javascripts/bulletin.js")
+    script(type="text/javascript", src="/javascripts/modal.min.js")
+    script(type="text/javascript", src="/javascripts/jqForm.min.js")
+    script(type="text/javascript", src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js")
+    script(type="text/javascript", src="/javascripts/main.js")      

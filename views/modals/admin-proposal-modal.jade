@@ -1,0 +1,22 @@
+div.modal.admin-proposal-modal
+    form(action="/admin-proposal", method="post", id="admin-proposal-form")
+        div
+            input(type="email", name="email", placeholder="Email")
+        
+        div
+            textarea(name="message", rows="30", placeholder="Tell us why you want to be an Admin!")
+
+        input(type="hidden", name="_csrf", value="#{ csrfToken }")
+
+        div.checkbox-group
+            input(type="checkbox", name="terms", id="checkbox")
+            p I've read and agree with the terms and conditions expressed below!
+
+        div.button-group
+            button(type="submit") Send!
+            button(type="reset", class="reset") Reset!
+            button(class="terms-btn", type="button") Terms!
+
+    div.admin-errors-ctn
+            
+    div.admin-success-ctn 

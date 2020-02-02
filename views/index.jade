@@ -1,0 +1,154 @@
+extends includes/base.jade
+
+block content  
+
+    input(type="hidden", value="#{ csrfToken }", id="csrf")
+
+    div.row
+
+        if posts.length != 0 && users.length != 0
+            div(class="twelve columns bulletin", id="bulletin")
+                ul
+                    if posts.length === 1
+                        li &rsaquo; #{ posts.length } post has been written!
+                    else
+                        li &rsaquo; #{ posts.length } posts have been written!    
+                    if users.length === 1
+                        li &rsaquo; We have #{ users.length } awesome, but lonely user!
+                    else
+                        li &rsaquo; We have #{ users.length } awesome users!
+                    li &rsaquo; No sign-up is required! Just post and comment!!!
+                <div class="close"><a href="javascript:void(0)">×</a></div>
+
+        if loggedAdmin === null
+            div.twelve.columns.admin-login
+                p(class="admin-login-btn") Admin 
+                    i(class="fa fa-level-up")
+
+        else
+            div.twelve.columns.admin-login
+                a(class="admin-logged", href="/admin") #{ loggedAdmin } 
+                    i(class="fa fa-level-up")              
+
+        div.twelve.columns.intro
+            h1 Post'O'Rama 
+                i(class="fa fa-pencil")
+
+        div.twelve.columns.highlights
+            div.four.columns
+                p
+                    i(class="fa fa-quote-left")
+                    span Welcome to the Post'O'Rama website! Here you can post and comment on other user's posts without any type of account registration! Just write and post at will! Only an email is needed, that's really it!
+
+            div.four.columns
+                p
+                    i(class="fa fa-quote-left")
+                    span There is no limit to what you can write and post! There is no topic or subject to write about! Everything is permitted! We feel freedom of speech is a blessing! You write about what you want, when you want!
+                
+            div.four.columns
+                p
+                    i(class="fa fa-quote-left")
+                    span Oh, and you can like a posts(or not!). If you want you can be an Admin. With that power you will help moderate Post'O'Rama and clean the house if needed! Want it? Check the footer to get more information!
+
+        div.twelve.columns.chevron-down
+            i(class="fa fa-chevron-down")
+
+        div.twelve.columns.errors-ctn
+            button(class="close-btn") X
+            h5 Fix the following errors!
+
+        div.twelve.columns
+            form(action="/new", method="post", id="new-post-form")
+                div.six.columns
+                    input(type="email", name="email", placeholder="Email")
+
+                div.six.columns
+                    input(type="text", name="title", placeholder="Title")        
+
+                div
+                    textarea(name="message", rows="30", placeholder="Message")
+
+                input(type="hidden", name="_csrf", value="#{ csrfToken }")
+
+                div
+                    button(type="submit") Send!
+                    button(type="reset", class="reset") Reset!
+                    span.form-message
+
+
+    hr
+
+    if posts.length != 0
+        div.posts-ctn
+            each post in posts
+                div.post
+                    
+                    h4= post.title
+                    
+                    if loggedAdmin
+                        div.delete-post-ctn
+                            form(action="/delete-post", method="post", class="delete-post-form")
+                                input(type="hidden", name="_csrf", value="#{ csrfToken }")
+                                input(type="hidden", name="postId", value="#{ post._id }")
+                                button(type="submit", class="fa fa-trash")    
+
+                    div.created-ctn
+                        small= moment(post.created).fromNow()
+                    
+                    div.content-ctn
+                        p
+                            q= post.content
+                    
+                    div.twelve.columns.author-ctn
+                        small by #{post.author.email}
+                    
+                    div.twelve.columns.post-actions
+                        form(action="/all-comments", method="post", class="all-comments-form")
+                            
+                            input(type="hidden", name="postId", value="#{ post._id }")
+                            input(type="hidden", name="_csrf", value="#{ csrfToken }")
+
+                            button(class="all-comments-btn", type="submit")
+                                i(class="fa fa-comments")
+                        
+                        form(action="/like", method="post", class="like-form")
+                            
+                            input(type="hidden", name="postId", value="#{ post._id }")
+                            input(type="hidden", name="_csrf", value="#{ csrfToken }")
+
+                            div.likes-ctn
+                                button(class="like-comment-btn", type="submit")
+                                    i(class="fa fa-thumbs-up")
+                                if post.likes.length < 10        
+                                    p(class="likes-count", style="top: 38%; left: 43%;") #{ post.likes.length }
+                                else if post.likes.length >= 100
+                                    p(class="likes-count", style="top: 38%; left: 33%;") #{ post.likes.length }
+                                else
+                                    p(class="likes-count", style="top: 38%; left: 40%;") #{ post.likes.length }    
+
+                        i(class="fa fa-plus-square")    
+
+                    div.twelve.columns.reply-form-ctn
+                        form(action="/reply", method="post", class="reply-form")
+                            div.twelve.columns
+                                input(type="email", name="email", placeholder="Email")
+
+                            div.twelve.columns
+                                textarea(name="content", rows="20", placeholder="Write Reply Content Here!")
+
+                            input(type="hidden", name="_csrf", value="#{ csrfToken }")
+
+                            input(type="hidden", name="postId", value="#{ post._id }")
+
+                            div.twelve.columns
+                                button(type="submit") Reply!
+                                input(type="reset", class="reset-reply")
+
+    else
+        div.twelve.columns.no-posts-ctn
+            img(src="/images/no-posts.png", alt="sad smile")
+            h4 No Posts Yet!!!
+
+    div.twelve.columns.all-comments-ctn
+
+    include includes/footer.jade                            

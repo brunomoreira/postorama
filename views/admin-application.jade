@@ -1,0 +1,76 @@
+extends includes/base.jade
+
+block content
+    
+    input(type="hidden", value="#{ csrfToken }", id="csrf")
+
+    if !user
+        div.row.title-ctn
+            div.twelve.columns.intro
+                h1 Post'O'Rama - Admin 
+                    i(class="fa fa-pencil")
+
+        div.row
+            div.twelve.columns.login-form-ctn
+                form(action="/admin/login", method="post", class="admin-form")
+                    div
+                        input(type="email", name="email", placeholder="Email")
+
+                    div
+                        input(type="password", name="password", placeholder="Password")
+                
+                    input(type="hidden", name="_csrf", value="#{ csrfToken }")
+
+                    div.button-group
+                        button(type="submit") Login!
+                        button(type="reset", class="reset") Reset!
+
+                div.admin-login-errors-ctn.admin-page
+
+                div.admin-login-success-ctn.admin-page
+
+    else
+        div.row.navbar
+            ul
+                a(href="/")
+                    li(class="fa fa-home")
+
+                a
+                    li
+                        form(action="/admin/applications", method="post", id="all-applications-form")
+                            input(type="hidden", name="_csrf", value="#{ csrfToken }")
+                            button(type="submit", class="fa fa-list-alt")    
+
+
+            ul.sign-out
+                a
+                    li(class="user-email") #{user.email}
+                a
+                    li
+                        i(class="fa fa-wrench admin-edit-btn")
+                a
+                    li  
+                        form(action="/admin/sign-out", method="post", id="sign-out-form")  
+                            input(type="hidden", name="_csrf", value="#{ csrfToken }")
+                            input(type="hidden", name="email", value="#{user.email}")
+                            button(type="submit", class="fa fa-sign-out")
+
+        div.row.rules-ctn
+            div.twelve.columns.rules-title
+                h1(class="fa fa-exclamation-triangle open-rules")  Please read the admin rules beforehand.
+                i(class="fa fa-times-circle close-rules")
+
+            div.twelve.columns.rules-text
+                ul
+                    li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, aliquam! Vitae adipisci neque dolores aliquam, in suscipit fuga culpa distinctio eveniet dolorem, maiores nam rem quae cumque reprehenderit deserunt natus.
+                    li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, aliquam! Vitae adipisci neque dolores aliquam, in suscipit fuga culpa distinctio eveniet dolorem, maiores nam rem quae cumque reprehenderit deserunt natus.
+                    ul
+                        li lorem Ipsum
+                        li Ipsum Lorem
+                        li All Focks N Out
+                        li Bolachinha Americana
+                    li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, aliquam! Vitae adipisci neque dolores aliquam, in suscipit fuga culpa distinctio eveniet dolorem, maiores nam rem quae cumque reprehenderit deserunt natus.
+                    li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, aliquam! Vitae adipisci neque dolores aliquam, in suscipit fuga culpa distinctio eveniet dolorem, maiores nam rem quae cumque reprehenderit deserunt natus.   
+
+        div.row.applications-ctn
+            

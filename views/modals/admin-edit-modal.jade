@@ -1,0 +1,37 @@
+div.modal.admin-edit-modal
+	div.title
+		h4 Edit Account
+
+	form(action="/admin/edit", method="post", class="admin-edit-form")
+		div.input-group
+			label(for="old_password")
+				input(type="password", name="old_password", placeholder="Old Password", id="old_password")
+			
+			label(for="new_password")
+				input(type="password", name="new_password", placeholder="New Password", id="new_password")
+
+			label(for="new_re_password")
+				input(type="password", name="new_re_password", placeholder="New Re Password", id="new_re_password")
+
+		input(type="hidden", name="_csrf", value="#{ csrfToken }")
+		if user
+			input(type="hidden", name="userId", value="#{ user._id }")
+		
+		div.button-group
+			button(class="login-btn", type="submit") Update!
+			button(class="reset", type="reset") Reset!
+
+	div.admin-edit-errors-ctn
+		
+	div.admin-edit-success-ctn
+
+	div.admin-delete-account
+		form(action="/admin/delete", method="post", id="admin-delete-form")
+			if user
+				input(type="hidden", name="userId", value="#{user._id}")
+			input(type="hidden", name="_csrf", value="#{ csrfToken }")
+			button(type="submit", class="delete-admin-btn") I don't want to be an admin anymore!
+
+	div.admin-delete-errors-ctn
+		
+	div.admin-delete-success-ctn		

@@ -1,0 +1,15 @@
+div.modal.admin-modal
+	form(action="/admin/login", method="post", class="admin-form")
+		div.input-group
+			input(type="email", name="email", placeholder="Email")
+			input(type="password", name="password", placeholder="Password")
+
+		input(type="hidden", name="_csrf", value="#{ csrfToken }")
+		
+		div.button-group
+			button(class="login-btn", type="submit") Login!
+			button(class="reset", type="reset") Reset!
+
+	div.admin-login-errors-ctn
+		
+	div.admin-login-success-ctn
